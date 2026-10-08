@@ -65,10 +65,10 @@ def login():
 
         cursor.execute("""
             SELECT
-                user_id,
-                username,
-                password,
-                role
+             id,
+             username,
+             password_hash,
+             role
             FROM users
             WHERE username = %s
             LIMIT 1
@@ -79,12 +79,12 @@ def login():
 
 
         if user and check_password_hash(
-            user["password"],
+            user["password_hash"],
             password
         ):
 
             session["logged_in"] = True
-            session["user_id"] = user["user_id"]
+            session["user_id"] = user["id"]
             session["username"] = user["username"]
             session["role"] = user["role"]
 
